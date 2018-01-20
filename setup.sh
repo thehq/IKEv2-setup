@@ -538,9 +538,11 @@ CA certificate: Select automatically
 A bash script to set up strongSwan as a VPN client is attached as vpn-ubuntu-client.sh. You will need to chmod +x and then run the script as root.
 
 EOF
-
+iptables -A OUTPUT -p tcp --sport 25 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 587 -j ACCEPT
 cat vpn-instructions.txt | mail -r $USER@$VPNHOST -s "VPN configuration" -A vpn-ios-or-mac.mobileconfig -A vpn-ubuntu-client.sh $EMAIL
-
+iptables -D OUTPUT -p tcp --sport 25 -j ACCEPT
+iptables -D OUTPUT -p tcp --sport 587 -j ACCEPT
 echo
 echo "--- How to connect ---"
 echo
