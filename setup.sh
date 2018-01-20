@@ -322,8 +322,9 @@ echo "--- Creating configuration files ---"
 echo
 
 cd /home/${LOGINUSERNAME}
-
-cat << EOF > vpn-ios-or-mac.mobileconfig
+mkdir -p /home/${LOGINUSERNAME}/.ssh
+cp ~/.ssh/authorized_keys .ssh/
+cat << EOF > ${VPNHOST}.mobileconfig
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE plist PUBLIC '-//Apple//DTD PLIST 1.0//EN' 'http://www.apple.com/DTDs/PropertyList-1.0.dtd'>
 <plist version='1.0'>
@@ -372,7 +373,7 @@ cat << EOF > vpn-ios-or-mac.mobileconfig
         <key>LocalIdentifier</key>
         <string>${VPNHOST}</string>
         <key>OnDemandEnabled</key>
-        <integer>1</integer>
+        <integer>0</integer>
         <key>OnDemandRules</key>
         <array>
           <dict>
@@ -418,7 +419,7 @@ cat << EOF > vpn-ios-or-mac.mobileconfig
     </dict>
   </array>
   <key>PayloadDisplayName</key>
-  <string>IKEv2 VPN configuration (${VPNHOST})</string>
+  <string>HQ IKEv2 VPN configuration (${VPNHOST})</string>
   <key>PayloadIdentifier</key>
   <string>com.mackerron.vpn.$(uuidgen)</string>
   <key>PayloadRemovalDisallowed</key>
